@@ -68,8 +68,8 @@ Además tenemos dos promociones activas:
 
 Ahora mismo cuando un cliente llega a uno de nuestros restaurantes mantiene una conversación, tal que:  
 ...  
-Customer "C": Buenos días.
-Barista "B": Buenos días.
+Customer "C": Buenos días.  
+Barista "B": Buenos días.  
 ...  
 C: Eh tron, yo y la Yoly tenemos hambre, me pones una hamburguesa con queso y patatas grandes, quiero la carne de cerdo tamaño mediano, poco hecha.  
 B: ¿Señor, quiere bebida? Así es el burrimenú y le sale más barato.  
@@ -77,16 +77,16 @@ C: Ah, sí claro.
 ...  
 C: ¿Está mi pedido ya?  
 B: No, no lo está.  
-...
-C: ¿Cuánto es mi pedido?
-B: Su pedido son X€.
+...  
+C: ¿Cuánto es mi pedido?  
+B: Su pedido son X€.  
 C: Toma 30€.  
-B: Gracias. Tome sus Y€ de cambio.
-C: Gracias.
-....  
+B: Gracias. Tome sus Y€ de cambio.  
+C: Gracias.  
+...  
 C: ¿Está mi pedido ya?  
 B: No, no lo está.  
-....  
+...  
 C: ¿Está mi pedido ya?  
 B: Sí. Aquí lo tiene.  
 ...  
@@ -98,17 +98,17 @@ En esta conversación el barista tiene abierto un excel, donde en una hoja espec
 
 Al mismo tiempo el barista tiene conversaciones con los chefs de cocina, por ejemplo:  
 
-Barista "B": Tengo un pedido nuevo: hamburguesa mediana de cerdo, poco hecha, con queso.
+Barista "B": Tengo un pedido nuevo: hamburguesa mediana de cerdo, poco hecha, con queso.  
 Chef "C": Oído cocina.   
 ...  
 B: ¿Está el pedido?  
-C: No. 
+C: No.  
 ...  
 B: ¿Está el pedido?  
-C: No.
+C: No.  
 ...  
 B: ¿Está el pedido?  
-C: Sí, toma.
+C: Sí, toma.  
 
 Los chefs de cocina tienen una media de 7min para preparar una hamburguesa. Las patatas y la bebida las suelen preparar los baristas y tardan unos 2min de media. 
 
@@ -121,3 +121,8 @@ Los oficinistas, una vez tienen todos los pedidos de todas las tiendas, hacen un
 ### Gestión de la empresa 
 
 Por otro lado, sabemos que en el plan de expansión se planea añadir un nuevo departamento de inteligencia empresarial o en inglés, business intelligence. Así se podrá llevar un control de las rentabilidades de cada tienda, los días y horas que más se vende y si las promociones están funcionando como se esperaba.
+
+Nota de Citibox
+===========
+El ejercicio simula ser un proyecto real para intentar abarcar varias fases del ciclo de lanzamiento de un proyecto software. Su objetivo principal es demostrar conocimientos y razonamientos al problema propuesto. Para demostrar conocimientos y/o razonamientos no hace falta que sea mediante el código de programación. La solución propuesta puede estar formada por código de programación, artefactos del diseño de software, incluso ideas bien reflejadas y expresadas. Lo que sí se debería dejar reflejado mediante código de programación es lo que se pide explícitamente en el enunciado con las lógicas asociadas.
+Si tienes cualquier duda de lo que sea, por favor, ¡pregúntanos!
