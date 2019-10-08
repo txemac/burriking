@@ -17,7 +17,7 @@ Burriking en la actualidad está presente en Madrid, Dublín, Valencia, Cáceres
 ## Que se necesita
 Albert, nuestro CEO, le ha pedido a la CTO (Mabel O.) que le entregue en las próximas dos semanas un MVP técnico que actúe como base y ejemplo para poder dárselo a la empresa consultora de turno (Evil Corp). Este MVP va a estar acotado en funcionalidad, pero definirá la calidad del software a desarrollar por Evil Corp. Mabel está hasta arriba de trabajo y se ha visto obligada a externalizar el desarrollo del backend del MVP. Por lo tanto, aquí es dónde entras tú como desarrollador externo, para llevar a cabo el desarrollo del MVP del backend. Como puedes ver, es una pequeña tarea pero importante, pues tendrá implicaciones en la arquitectura de todo el sistema futuro de Burriking.
 
-El departamento de frontend acaba de terminar la primera funcionalidad de la Web App para el customer, la de pedir hamburguesas. Esta consta de un formulario para rellenar el pedido de la comida y de un listado para ver el estado de los pedidos. Para ello necesitamos la parte de backend necesaria para hacer funcionar los dos casos de uso que frontend tiene ya hechos.
+El departamento de frontend acaba de terminar la primera funcionalidad de la Web App para el customer, la de pedir hamburguesas. Esta consta de un formulario para rellenar el pedido de la comida y de un listado para ver el estado de los pedidos. Para ello necesitamos la parte de backend necesaria para hacer funcionar los dos casos de uso que frontend tiene ya hechos. Hemos dejado en la carpeta `frontend` dos mockups que se usaron para desarrollar el diseño del frontend.
 
 En esta primera versión necesitamos:
 
