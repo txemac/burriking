@@ -125,4 +125,6 @@ Por otro lado, sabemos que en el plan de expansión se planea añadir un nuevo d
 Nota de Citibox
 ===========
 El ejercicio simula ser un proyecto real para intentar abarcar varias fases del ciclo de lanzamiento de un proyecto software. Su objetivo principal es demostrar conocimientos y razonamientos al problema propuesto. Para demostrar conocimientos y/o razonamientos no hace falta que sea mediante el código de programación. La solución propuesta puede estar formada por código de programación, artefactos del diseño de software, incluso ideas bien reflejadas y expresadas. Lo que sí se debería dejar reflejado mediante código de programación es lo que se pide explícitamente en el enunciado con las lógicas asociadas.
+Esta es una prueba de desarrollador backend, intenta no poner esfuerzos en cosas que están fuera del desarrollo de backend, como puede ser, configurar servicios con Docker. 
 Si tienes cualquier duda de lo que sea, por favor, ¡pregúntanos!
+
