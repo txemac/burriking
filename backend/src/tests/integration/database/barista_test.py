@@ -4,10 +4,10 @@ from database import Barista
 from database.schemas import BaristaPost
 
 
-def test_create_ok(session, data_barista):
+def test_create_ok(session):
     count1 = session.query(Barista).count()
     data = BaristaPost(
-        username=data_barista['username'],
+        username='test_create',
     )
     Barista.create(
         db_session=session,

@@ -62,7 +62,7 @@ def client():
 @pytest.fixture()
 def data_barista():
     return dict(
-        username='txema',
+        username='txemac',
     )
 
 
