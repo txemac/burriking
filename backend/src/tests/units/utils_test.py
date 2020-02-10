@@ -2,7 +2,6 @@ from freezegun import freeze_time
 
 from app.utils import calculate_price_chips
 from app.utils import calculate_price_drink
-from app.utils import calculate_price_extra
 from app.utils import calculate_price_hamburger
 from app.utils import calculate_price_meat
 from app.utils import calculate_prices
@@ -19,40 +18,34 @@ from database.schemas import Order
 from tests.utils import assert_dicts
 
 
-def test_calculate_price_extra(order_1, order_2):
-    assert calculate_price_extra(order_1.items[0].extras[0]) == 1.5
-    assert calculate_price_extra(order_1.items[0].extras[1]) == 1.0
-    assert calculate_price_extra(order_2.items[0].extras[0]) == 1.0
-
-
 def test_calculate_price_meat(order_1, order_2):
-    assert calculate_price_meat(order_1.items[0].meats[0]) == 2.5
-    assert calculate_price_meat(order_2.items[0].meats[0]) == 2.5
-    assert calculate_price_meat(order_2.items[0].meats[1]) == 3.5
+    assert calculate_price_meat(order_1.hamburgers[0].meats[0]) == 2.5
+    assert calculate_price_meat(order_2.hamburgers[0].meats[0]) == 2.5
+    assert calculate_price_meat(order_2.hamburgers[0].meats[1]) == 3.5
 
 
 def test_calculate_price_hamburger(order_1, order_2):
-    assert calculate_price_hamburger(order_1.items[0]) == 10.0
-    assert calculate_price_hamburger(order_2.items[0]) == 12.0
+    assert calculate_price_hamburger(order_1.hamburgers[0]) == 10.0
+    assert calculate_price_hamburger(order_2.hamburgers[0]) == 12.0
 
 
 def test_calculate_price_chips(order_1, order_2, order_3):
-    assert calculate_price_chips(order_1.items[1]) == 2.5
-    assert calculate_price_chips(order_2.items[1]) == 3.5
-    assert calculate_price_chips(order_3.items[0]) == 3.5
-    assert calculate_price_chips(order_3.items[1]) == 3.5
+    assert calculate_price_chips(order_1.chips[0]) == 2.5
+    assert calculate_price_chips(order_2.chips[0]) == 3.5
+    assert calculate_price_chips(order_3.chips[0]) == 3.5
+    assert calculate_price_chips(order_3.chips[1]) == 3.5
 
 
 def test_calculate_price_drink(order_2, order_3):
-    assert calculate_price_drink(order_2.items[2]) == 2.5
-    assert calculate_price_drink(order_3.items[2]) == 2.5
+    assert calculate_price_drink(order_2.drinks[0]) == 2.5
+    assert calculate_price_drink(order_3.drinks[0]) == 2.5
 
 
 @freeze_time('2020-02-10')
 def test_calculate_prices_1(order_1):
     expected = Order(
         barista='txema',
-        items=[
+        hamburgers=[
             Hamburger(
                 meats=[
                     Meat(
@@ -62,23 +55,23 @@ def test_calculate_prices_1(order_1):
                         price=2.5,
                     )
                 ],
-                extras=[
-                    ExtraCheese(
-                        type='cheddar',
-                        price=1.5,
-                    ),
-                    ExtraTomato(
-                        type='normal',
-                        price=1.0,
-                    ),
-                ],
+                extra_cheese=ExtraCheese(
+                    type='cheddar',
+                    price=1.5,
+                ),
+                extra_tomato=ExtraTomato(
+                    type='normal',
+                    price=1.0,
+                ),
                 price=10.0,
             ),
+        ],
+        chips=[
             Chips(
                 type='gajo',
                 size='pequeñas',
                 price=2.5,
-            )
+            ),
         ],
         price=12.5,
     )
@@ -90,7 +83,7 @@ def test_calculate_prices_1(order_1):
 def test_calculate_prices_2(order_2):
     expected = Order(
         barista='txema',
-        items=[
+        hamburgers=[
             Hamburger(
                 meats=[
                     Meat(
@@ -106,19 +99,21 @@ def test_calculate_prices_2(order_2):
                         price=3.5,
                     ),
                 ],
-                extras=[
-                    ExtraTomato(
-                        type='normal',
-                        price=1.0,
-                    )
-                ],
+                extra_tomato=ExtraTomato(
+                    type='normal',
+                    price=1.0,
+                ),
                 price=12.0 * (100 - 15) / 100,
             ),
+        ],
+        chips=[
             Chips(
                 type='de la abuela',
                 size='grandes',
                 price=3.5,
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
                 price=2.5,
@@ -134,7 +129,7 @@ def test_calculate_prices_2(order_2):
 def test_calculate_prices_3(order_3):
     expected = Order(
         barista='txema',
-        items=[
+        chips=[
             Chips(
                 type='deluxe',
                 size='grandes',
@@ -145,6 +140,8 @@ def test_calculate_prices_3(order_3):
                 size='grandes',
                 price=3.5,
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
                 price=2.5,
@@ -160,7 +157,7 @@ def test_calculate_prices_3(order_3):
 def test_calculate_prices_promotion_menu(order_promotion_menu):
     expected = Order(
         barista='txema',
-        items=[
+        hamburgers=[
             Hamburger(
                 meats=[
                     Meat(
@@ -170,23 +167,25 @@ def test_calculate_prices_promotion_menu(order_promotion_menu):
                         price=2.5,
                     )
                 ],
-                extras=[
-                    ExtraCheese(
-                        type='cheddar',
-                        price=1.5,
-                    ),
-                    ExtraTomato(
-                        type='normal',
-                        price=1.0,
-                    ),
-                ],
+                extra_cheese=ExtraCheese(
+                    type='cheddar',
+                    price=1.5,
+                ),
+                extra_tomato=ExtraTomato(
+                    type='normal',
+                    price=1.0,
+                ),
                 price=10.0 * (100 - 15) / 100,
             ),
+        ],
+        chips=[
             Chips(
                 type='gajo',
                 size='pequeñas',
                 price=2.5,
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
                 price=2.5,
@@ -203,7 +202,7 @@ def test_calculate_prices_promotion_menu(order_promotion_menu):
 def test_calculate_prices_promotion_euromania(order_promotion_menu):
     expected = Order(
         barista='txema',
-        items=[
+        hamburgers=[
             Hamburger(
                 meats=[
                     Meat(
@@ -213,23 +212,25 @@ def test_calculate_prices_promotion_euromania(order_promotion_menu):
                         price=2.5,
                     )
                 ],
-                extras=[
-                    ExtraCheese(
-                        type='cheddar',
-                        price=1.5,
-                    ),
-                    ExtraTomato(
-                        type='normal',
-                        price=1.0,
-                    ),
-                ],
+                extra_cheese=ExtraCheese(
+                    type='cheddar',
+                    price=1.5,
+                ),
+                extra_tomato=ExtraTomato(
+                    type='normal',
+                    price=1.0,
+                ),
                 price=10.0 * (100 - 15) / 100,
             ),
+        ],
+        chips=[
             Chips(
                 type='gajo',
                 size='pequeñas',
                 price=1.0,
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
                 price=2.5,
@@ -246,12 +247,14 @@ def test_calculate_prices_promotion_euromania(order_promotion_menu):
 def test_calculate_prices_promotion_jarramania_1(order_promotion_jarramania):
     expected = Order(
         barista='txema',
-        items=[
+        chips=[
             Chips(
                 type='deluxe',
                 size='grandes',
                 price=3.5,
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
                 price=2.5,
@@ -272,12 +275,14 @@ def test_calculate_prices_promotion_jarramania_1(order_promotion_jarramania):
 def test_calculate_prices_promotion_jarramania_2(order_promotion_jarramania):
     expected = Order(
         barista='txema',
-        items=[
+        chips=[
             Chips(
                 type='deluxe',
                 size='grandes',
                 price=3.5,
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
                 price=2.5,
@@ -298,12 +303,14 @@ def test_calculate_prices_promotion_jarramania_2(order_promotion_jarramania):
 def test_calculate_prices_promotion_jarramania_3(order_promotion_jarramania):
     expected = Order(
         barista='txema',
-        items=[
+        chips=[
             Chips(
                 type='deluxe',
                 size='grandes',
                 price=3.5,
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
                 price=2.5,

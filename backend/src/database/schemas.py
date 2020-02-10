@@ -1,9 +1,7 @@
 from typing import List
 from typing import Literal
-from typing import Union
 
 from pydantic import BaseModel
-from pydantic import validator
 
 
 class Meat(BaseModel):
@@ -25,8 +23,9 @@ class ExtraCheese(BaseModel):
 
 class Hamburger(BaseModel):
     bread_type: Literal['chapata', 'molde', 'deluxe'] = None
-    meats: List[Meat] = None
-    extras: List[Union[ExtraTomato, ExtraCheese]] = None
+    meats: List[Meat]
+    extra_tomato: ExtraTomato = None
+    extra_cheese: ExtraCheese = None
     price: float = None
 
 
@@ -41,18 +40,11 @@ class Chips(BaseModel):
     price: float = None
 
 
-class OrderPost(BaseModel):
-    barista: str = None
-    items: List
-
-    @validator('items')
-    def item_type(cls, items):
-        if not all(isinstance(item, (Hamburger, Drink, Chips)) for item in items):
-            raise ValueError('Not valid type.')
-        return items
-
-
-class Order(OrderPost):
+class Order(BaseModel):
+    barista: str
+    hamburgers: List[Hamburger] = []
+    chips: List[Chips] = []
+    drinks: List[Drink] = []
     price: float = None
     is_ready: Literal['listo', 'en cocina'] = None
 

@@ -29,7 +29,7 @@ def mongodb_drop():
 def order_1():
     return Order(
         barista='txema',
-        items=[
+        hamburgers=[
             Hamburger(
                 meats=[
                     Meat(
@@ -38,20 +38,20 @@ def order_1():
                         cooked='al punto',
                     )
                 ],
-                extras=[
-                    ExtraCheese(
-                        type='cheddar',
-                    ),
-                    ExtraTomato(
-                        type='normal',
-                    ),
-                ],
+                extra_cheese=ExtraCheese(
+                    type='cheddar',
+                ),
+                extra_tomato=ExtraTomato(
+                    type='normal',
+                ),
             ),
+        ],
+        chips=[
             Chips(
                 type='gajo',
                 size='pequeñas',
-            )
-        ]
+            ),
+        ],
     )
 
 
@@ -59,7 +59,7 @@ def order_1():
 def order_2():
     return Order(
         barista='txema',
-        items=[
+        hamburgers=[
             Hamburger(
                 meats=[
                     Meat(
@@ -73,16 +73,18 @@ def order_2():
                         cooked='al punto',
                     ),
                 ],
-                extras=[
-                    ExtraTomato(
-                        type='normal',
-                    )
-                ],
+                extra_tomato=ExtraTomato(
+                    type='normal',
+                ),
             ),
+        ],
+        chips=[
             Chips(
                 type='de la abuela',
                 size='grandes',
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
             ),
@@ -94,7 +96,7 @@ def order_2():
 def order_3():
     return Order(
         barista='txema',
-        items=[
+        chips=[
             Chips(
                 type='deluxe',
                 size='grandes',
@@ -103,6 +105,8 @@ def order_3():
                 type='gajo',
                 size='grandes',
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
             ),
@@ -114,7 +118,7 @@ def order_3():
 def order_promotion_menu():
     return Order(
         barista='txema',
-        items=[
+        hamburgers=[
             Hamburger(
                 meats=[
                     Meat(
@@ -123,19 +127,21 @@ def order_promotion_menu():
                         cooked='al punto',
                     )
                 ],
-                extras=[
-                    ExtraCheese(
-                        type='cheddar',
-                    ),
-                    ExtraTomato(
-                        type='normal',
-                    ),
-                ],
+                extra_cheese=ExtraCheese(
+                    type='cheddar',
+                ),
+                extra_tomato=ExtraTomato(
+                    type='normal',
+                ),
             ),
+        ],
+        chips=[
             Chips(
                 type='gajo',
                 size='pequeñas',
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
             ),
@@ -147,11 +153,13 @@ def order_promotion_menu():
 def order_promotion_jarramania():
     return Order(
         barista='txema',
-        items=[
+        chips=[
             Chips(
                 type='deluxe',
                 size='grandes',
             ),
+        ],
+        drinks=[
             Drink(
                 type='burribeer',
             ),

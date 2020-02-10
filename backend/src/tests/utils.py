@@ -17,7 +17,7 @@ def assert_dicts(original, expected):
         elif type(original[key]) == list:
             assert type(expected[key]) == list
             assert_lists(original=original[key], expected=expected[key])
-        elif not expected[key] == '*':
+        elif not expected[key] == '*' and original[key] is not None:
             assert original[key] == expected[key], key
 
 

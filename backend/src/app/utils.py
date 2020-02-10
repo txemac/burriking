@@ -1,11 +1,8 @@
 from datetime import date
 from datetime import datetime
-from typing import Union
 
 from database.schemas import Chips
 from database.schemas import Drink
-from database.schemas import ExtraCheese
-from database.schemas import ExtraTomato
 from database.schemas import Hamburger
 from database.schemas import Meat
 from database.schemas import Order
@@ -19,15 +16,14 @@ def calculate_prices(
 
     :param Order order: list of order.
     """
-    for item in order.items:
-        if isinstance(item, Drink):
-            item.price = calculate_price_drink(item)
+    for drink in order.drinks:
+        drink.price = calculate_price_drink(drink=drink)
 
-        elif isinstance(item, Chips):
-            item.price = calculate_price_chips(item)
+    for chips in order.chips:
+        chips.price = calculate_price_chips(chips=chips)
 
-        elif isinstance(item, Hamburger):
-            item.price = calculate_price_hamburger(item)
+    for hamburger in order.hamburgers:
+        hamburger.price = calculate_price_hamburger(hamburger=hamburger)
 
     if check_promotion_menu_completed(order=order):
         apply_promotion_menu_completed(order=order)
@@ -53,62 +49,64 @@ def calculate_total_price(
     if check_promotion_jarramania(order=order):
         total = 3.0
     else:
-        for item in order.items:
+        for item in order.hamburgers + order.drinks + order.chips:
             total += item.price
     return total
 
 
 def calculate_price_drink(
-        item: Drink
+        drink: Drink
 ) -> float:
     """
     Calculate price for order drink.
 
-    :param Drink item: item
+    :param Drink drink: drink
     :return float: price
     """
     result = 0.0
-    if item.type == 'burricola':
+    if drink.type == 'burricola':
         result = 2.3
-    elif item.type == 'burribeer':
+    elif drink.type == 'burribeer':
         result = 2.5
-    elif item.type == 'brawndo':
+    elif drink.type == 'brawndo':
         result = 7.5
     return result
 
 
 def calculate_price_chips(
-        item: Chips
+        chips: Chips
 ) -> float:
     """
     Calculate price for order chips.
 
-    :param Chips item: item
+    :param Chips chips: chips
     :return float: price
     """
     result = 0.0
-    if item.size == 'pequeñas':
+    if chips.size == 'pequeñas':
         result = 2.5
-    elif item.size == 'grandes':
+    elif chips.size == 'grandes':
         result = 3.5
     return result
 
 
 def calculate_price_hamburger(
-        item: Hamburger
+        hamburger: Hamburger
 ) -> float:
     """
     Calculate price for order hamburger.
     Calculate and adding prices for meats and extra ingredients.
 
-    :param Hamburger item: item
+    :param Hamburger hamburger: hamburger
     :return float: price
     """
     result = 5.0
-    for meat in item.meats:
+    for meat in hamburger.meats:
         result += calculate_price_meat(meat)
-    for extra in item.extras:
-        result += calculate_price_extra(extra)
+    if hamburger.extra_cheese:
+        result += 1.5
+    if hamburger.extra_tomato:
+        result += 1.0
     return result
 
 
@@ -132,24 +130,6 @@ def calculate_price_meat(
     return result
 
 
-def calculate_price_extra(
-        extra: Union[ExtraCheese, ExtraTomato]
-) -> float:
-    """
-    Calculate price for a extra ingredient.
-
-    :param Union[ExtraCheese, ExtraTomato] extra: extra
-    :return float: price
-    """
-    result = 0.0
-    if isinstance(extra, ExtraCheese):
-        result = 1.5
-    elif isinstance(extra, ExtraTomato):
-        result = 1.0
-    extra.price = result
-    return result
-
-
 def check_promotion_menu_completed(order):
     """
     Check if the promotion 15% menu completed is applicable.
@@ -158,17 +138,7 @@ def check_promotion_menu_completed(order):
     :param Order order: order
     :return boolean: is promotion applicable
     """
-    hamburger = 0
-    drink = 0
-    chips = 0
-    for item in order.items:
-        if isinstance(item, Hamburger):
-            hamburger += 1
-        elif isinstance(item, Drink):
-            drink += 1
-        elif isinstance(item, Chips):
-            chips += 1
-    return hamburger == drink == chips == 1
+    return len(order.hamburgers) > 0 and len(order.chips) > 0 and len(order.drinks) > 0
 
 
 def apply_promotion_menu_completed(
@@ -181,9 +151,8 @@ def apply_promotion_menu_completed(
     :param Order order: order
     :return order: order with promotion applied
     """
-    for item in order.items:
-        if isinstance(item, Hamburger):
-            item.price = item.price * (100 - 15) / 100
+    for hamburger in order.hamburgers:
+        hamburger.price = hamburger.price * (100 - 15) / 100
 
 
 def check_promotion_euromania():
@@ -204,9 +173,8 @@ def apply_promotion_euromania(
 
     :param Order order: order
     """
-    for item in order.items:
-        if isinstance(item, Chips):
-            item.price = 1.0
+    for chips in order.chips:
+        chips.price = 1.0
 
 
 def check_promotion_jarramania(
@@ -220,17 +188,9 @@ def check_promotion_jarramania(
     :param Order order: order
     :return boolean: is promotion applicable
     """
-    if not len(order.items) == 3:
-        return False
-
-    burribeer = 0
-    chips = 0
-    for item in order.items:
-        if isinstance(item, Drink) and item.type == 'burribeer':
-            burribeer += 1
-        if isinstance(item, Chips):
-            chips += 1
-    if not (burribeer == 2 and chips == 1):
+    if len(order.drinks) != 2 \
+            and [drink.type != 'burribeer' for drink in order.drinks] \
+            and len(order.chips) != 1:
         return False
 
     day_before = datetime.utcnow() <= datetime.strptime('2020-09-30', '%Y-%m-%d')
