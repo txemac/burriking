@@ -9,15 +9,22 @@ services:
     ports:
       - 8000:8000
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db/postgres_db
-  db:
-    image: postgres:12.1-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      MONGODB_URL: "mongodb://mongodb:27017"
+      MONGODB_DB_NAME: "burriking"
+      MONGODB_COLLECTION: "orders"
+      MONGODB_COLLECTION_TEST: "orders"
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres_db
+      MONGODB_USERNAME: "admin"
+      MONGODB_PASSWORD: "admin"
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
 
 volumes:
-  postgres_data:
+  mongo_data:
