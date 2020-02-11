@@ -14,7 +14,7 @@ def test_get_orders_barista_ok(client, mongo_db_drop, order_1):
     mongo_db_client.add_order(order=order_1)
     response = client.get(f"/api/v1/orders?barista={order_1.barista}")
     assert response.status_code == HTTP_200_OK
-    assert response.json() is not None
+    assert len(response.json()) == 1
 
 
 def test_get_orders_barista_empty(client, mongo_db_drop):

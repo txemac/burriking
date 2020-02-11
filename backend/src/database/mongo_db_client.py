@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 from pymongo import MongoClient
+from pymongo.cursor import Cursor
 
 from database.schemas import Order
 
@@ -36,9 +37,9 @@ def add_order(
     return order
 
 
-def get_orders_by_barista(
+def get_orders_filters(
         barista: str,
-):
+) -> Cursor:
     """
     Get all order from a barista.
 
