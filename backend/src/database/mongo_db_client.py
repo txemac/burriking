@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from pymongo import MongoClient
 
@@ -32,6 +33,7 @@ def add_order(
     :return Order: order inserted
     """
     collection = _get_mongo_db_client()[collection_name]
+    order.dt_created = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     collection.insert_one(document=order.dict())
     return order
 

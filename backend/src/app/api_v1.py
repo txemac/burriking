@@ -5,6 +5,7 @@ from starlette.status import HTTP_200_OK
 from starlette.status import HTTP_201_CREATED
 
 from app.utils import calculate_prices
+from app.utils import order_is_ready
 from database import mongo_db_client
 from database.schemas import Order
 
@@ -23,4 +24,7 @@ def add_order(
 def get_orders(
         barista: str,
 ):
-    return list(mongo_db_client.get_orders_by_barista(barista=barista))
+    orders = list(mongo_db_client.get_orders_by_barista(barista=barista))
+    for order in orders:
+        order['is_ready'] = order_is_ready(order=order)
+    return orders

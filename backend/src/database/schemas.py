@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 from typing import Literal
 
@@ -47,6 +48,7 @@ class Order(BaseModel):
     chips: List[Chips] = []
     drinks: List[Drink] = []
     price: float = None
+    dt_created: datetime = None
     is_ready: Literal['listo', 'en cocina'] = None
 
 

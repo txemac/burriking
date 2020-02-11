@@ -1,5 +1,7 @@
 from datetime import date
 from datetime import datetime
+from datetime import timedelta
+from typing import Dict
 
 from database.schemas import Chips
 from database.schemas import Drink
@@ -198,3 +200,20 @@ def check_promotion_jarramania(
                    datetime.now().time() <= \
                    datetime.strptime('19:30:00', '%H:%M:%S').time()
     return day_before is True and hour_between is True
+
+
+def order_is_ready(
+        order: Dict
+) -> str:
+    """
+    Check if the order is ready.
+
+    :param Order order: order
+    :return str: 'listo' or 'en cocina'
+    """
+    minutes = 2
+    if len(order['hamburgers']) > 1:
+        minutes = 7
+
+    dt_created = datetime.strptime(order['dt_created'], '%Y-%m-%d %H:%M:%S')
+    return 'listo' if dt_created + timedelta(minutes=minutes) < datetime.now() else 'en cocina'

@@ -8,6 +8,7 @@ from app.utils import calculate_prices
 from app.utils import check_promotion_euromania
 from app.utils import check_promotion_jarramania
 from app.utils import check_promotion_menu_completed
+from app.utils import order_is_ready
 from database.schemas import Chips
 from database.schemas import Drink
 from database.schemas import ExtraCheese
@@ -325,3 +326,8 @@ def test_calculate_prices_promotion_jarramania_3(order_promotion_jarramania):
     assert check_promotion_jarramania(order_promotion_jarramania) is False
     result = calculate_prices(order=order_promotion_jarramania)
     assert_dicts(original=result.dict(), expected=expected.dict())
+
+
+@freeze_time('2020-10-01 17:00:00')
+def test_order_is_ready_listo(order_data):
+    assert order_is_ready(order=order_data) == 'listo'

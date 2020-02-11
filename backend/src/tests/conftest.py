@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 import pytest
 from starlette.testclient import TestClient
@@ -145,7 +146,7 @@ def order_promotion_menu():
             Drink(
                 type='burribeer',
             ),
-        ]
+        ],
     )
 
 
@@ -177,4 +178,5 @@ def order_data():
         hamburgers=[],
         chips=[dict(type='deluxe', size='grandes')],
         drinks=[dict(type='burricola')],
+        dt_created=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     )
