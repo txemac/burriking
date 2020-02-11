@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 import pytest
+from starlette.config import environ
 from starlette.testclient import TestClient
 
 from app.main import app
@@ -14,6 +15,8 @@ from database.schemas import Hamburger
 from database.schemas import Meat
 from database.schemas import Order
 
+environ['MONGODB_COLLECTION'] = 'test'
+
 
 @pytest.fixture()
 def client():
@@ -23,7 +26,7 @@ def client():
 
 @pytest.fixture
 def mongo_db_drop():
-    mongo_db_client._get_mongo_db_client().drop_collection(name_or_collection=os.getenv('MONGODB_COLLECTION_TEST'))
+    mongo_db_client._get_mongo_db_client().drop_collection(name_or_collection=os.getenv('MONGODB_COLLECTION'))
 
 
 @pytest.fixture

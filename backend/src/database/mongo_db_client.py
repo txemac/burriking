@@ -23,16 +23,14 @@ def _get_mongo_db_client():
 
 def add_order(
         order: Order,
-        collection_name: str = os.getenv('MONGODB_COLLECTION'),
 ) -> Order:
     """
     Add a new document at mongoDB.
 
     :param Order order: order
-    :param str collection_name: name of the collection
     :return Order: order inserted
     """
-    collection = _get_mongo_db_client()[collection_name]
+    collection = _get_mongo_db_client()[os.getenv('MONGODB_COLLECTION')]
     order.dt_created = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     collection.insert_one(document=order.dict())
     return order
@@ -40,16 +38,14 @@ def add_order(
 
 def get_orders_by_barista(
         barista: str,
-        collection_name: str = os.getenv('MONGODB_COLLECTION'),
 ):
     """
     Get all order from a barista.
 
     :param str barista: barista
-    :param str collection_name: name of the collection
     :return Cursor: pymongo cursor
     """
-    collection = _get_mongo_db_client()[collection_name]
+    collection = _get_mongo_db_client()[os.getenv('MONGODB_COLLECTION')]
     filters = dict()
     if barista is not None:
         filters['barista'] = barista
