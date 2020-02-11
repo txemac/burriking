@@ -21,7 +21,7 @@ def client():
 
 
 @pytest.fixture
-def mongodb_drop():
+def mongo_db_drop():
     mongo_db_client._get_mongo_db_client().drop_collection(name_or_collection=os.getenv('MONGODB_COLLECTION_TEST'))
 
 
@@ -167,4 +167,14 @@ def order_promotion_jarramania():
                 type='burribeer',
             ),
         ],
+    )
+
+
+@pytest.fixture
+def order_data():
+    return dict(
+        barista='txema',
+        hamburgers=[],
+        chips=[],
+        drinks=[],
     )

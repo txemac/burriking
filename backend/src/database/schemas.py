@@ -2,6 +2,7 @@ from typing import List
 from typing import Literal
 
 from pydantic import BaseModel
+from pydantic import Field
 
 
 class Meat(BaseModel):
@@ -41,7 +42,7 @@ class Chips(BaseModel):
 
 
 class Order(BaseModel):
-    barista: str
+    barista: str = Field(..., min_length=3, max_length=150)
     hamburgers: List[Hamburger] = []
     chips: List[Chips] = []
     drinks: List[Drink] = []
