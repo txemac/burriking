@@ -75,6 +75,7 @@ def test_calculate_prices_1(order_1):
             ),
         ],
         price=12.5,
+        promotions=[],
     )
     result = calculate_prices(order=order_1)
     assert_dicts(original=result.dict(), expected=expected.dict())
@@ -121,6 +122,7 @@ def test_calculate_prices_2(order_2):
             ),
         ],
         price=16.2,
+        promotions=['menu'],
     )
     result = calculate_prices(order=order_2)
     assert_dicts(original=result.dict(), expected=expected.dict())
@@ -149,6 +151,7 @@ def test_calculate_prices_3(order_3):
             ),
         ],
         price=9.5,
+        promotions=[],
     )
     result = calculate_prices(order=order_3)
     assert_dicts(original=result.dict(), expected=expected.dict())
@@ -193,6 +196,7 @@ def test_calculate_prices_promotion_menu(order_promotion_menu):
             ),
         ],
         price=13.5,
+        promotions=['menu'],
     )
     assert check_promotion_menu_completed(order=order_promotion_menu) is True
     result = calculate_prices(order=order_promotion_menu)
@@ -238,6 +242,7 @@ def test_calculate_prices_promotion_euromania(order_promotion_menu):
             ),
         ],
         price=12.0,
+        promotions=['menu', 'euromania'],
     )
     assert check_promotion_euromania() is True
     result = calculate_prices(order=order_promotion_menu)
@@ -266,6 +271,7 @@ def test_calculate_prices_promotion_jarramania_1(order_promotion_jarramania):
             ),
         ],
         price=3.0,
+        promotions=['jarramania'],
     )
     assert check_promotion_jarramania(order_promotion_jarramania) is True
     result = calculate_prices(order=order_promotion_jarramania)
@@ -294,6 +300,7 @@ def test_calculate_prices_promotion_jarramania_2(order_promotion_jarramania):
             ),
         ],
         price=8.5,
+        promotions=[],
     )
     assert check_promotion_jarramania(order_promotion_jarramania) is False
     result = calculate_prices(order=order_promotion_jarramania)
@@ -322,6 +329,7 @@ def test_calculate_prices_promotion_jarramania_3(order_promotion_jarramania):
             ),
         ],
         price=8.5,
+        promotions=[],
     )
     assert check_promotion_jarramania(order_promotion_jarramania) is False
     result = calculate_prices(order=order_promotion_jarramania)

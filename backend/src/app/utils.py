@@ -50,6 +50,7 @@ def calculate_total_price(
     total = 0.0
     if check_promotion_jarramania(order=order):
         total = 3.0
+        order.promotions.append('jarramania')
     else:
         for item in order.hamburgers + order.drinks + order.chips:
             total += item.price
@@ -107,8 +108,10 @@ def calculate_price_hamburger(
         result += calculate_price_meat(meat)
     if hamburger.extra_cheese:
         result += 1.5
+        hamburger.extra_cheese.price = 1.5
     if hamburger.extra_tomato:
         result += 1.0
+        hamburger.extra_tomato.price = 1.0
     return result
 
 
@@ -155,6 +158,7 @@ def apply_promotion_menu_completed(
     """
     for hamburger in order.hamburgers:
         hamburger.price = hamburger.price * (100 - 15) / 100
+    order.promotions.append('menu')
 
 
 def check_promotion_euromania():
@@ -177,6 +181,7 @@ def apply_promotion_euromania(
     """
     for chips in order.chips:
         chips.price = 1.0
+    order.promotions.append('euromania')
 
 
 def check_promotion_jarramania(

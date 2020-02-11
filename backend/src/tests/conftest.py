@@ -53,6 +53,7 @@ def order_1():
                 size='pequeñas',
             ),
         ],
+        promotions=[],
     )
 
 
