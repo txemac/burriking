@@ -1,4 +1,7 @@
+from typing import List
+
 from fastapi import APIRouter
+from starlette.status import HTTP_200_OK
 from starlette.status import HTTP_201_CREATED
 
 from app.utils import calculate_prices
@@ -14,3 +17,10 @@ def add_order(
 ):
     order = calculate_prices(order=payload)
     return mongo_db_client.add_order(order=order)
+
+
+@api_v1.get('/orders/{barista}', response_model=List[Order], status_code=HTTP_200_OK)
+def get_orders(
+        barista: str,
+):
+    return list(mongo_db_client.get_orders_by_barista(barista=barista))

@@ -175,6 +175,6 @@ def order_data():
     return dict(
         barista='txema',
         hamburgers=[],
-        chips=[],
-        drinks=[],
+        chips=[dict(type='deluxe', size='grandes')],
+        drinks=[dict(type='burricola')],
     )

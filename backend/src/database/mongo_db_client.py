@@ -34,3 +34,21 @@ def add_order(
     collection = _get_mongo_db_client()[collection_name]
     collection.insert_one(document=order.dict())
     return order
+
+
+def get_orders_by_barista(
+        barista: str,
+        collection_name: str = os.getenv('MONGODB_COLLECTION'),
+):
+    """
+    Get all order from a barista.
+
+    :param str barista: barista
+    :param str collection_name: name of the collection
+    :return Cursor: pymongo cursor
+    """
+    collection = _get_mongo_db_client()[collection_name]
+    filters = dict()
+    filters['barista'] = barista
+    result = collection.find(filters)
+    return result
