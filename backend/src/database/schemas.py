@@ -50,7 +50,7 @@ class Order(BaseModel):
     price: float = None
     dt_created: datetime = None
     is_ready: Literal['listo', 'en cocina'] = None
-    promotions: List[Literal['menu', 'euromania', 'jarramania']] = []
+    promotions: List[Literal['burrimenu', 'euromania', 'jarramania']] = []
 
 
 class OrderOnDB(Order):

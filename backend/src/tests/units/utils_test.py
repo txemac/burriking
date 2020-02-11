@@ -5,9 +5,9 @@ from app.utils import calculate_price_drink
 from app.utils import calculate_price_hamburger
 from app.utils import calculate_price_meat
 from app.utils import calculate_prices
+from app.utils import check_promotion_burrimenu
 from app.utils import check_promotion_euromania
 from app.utils import check_promotion_jarramania
-from app.utils import check_promotion_menu_completed
 from app.utils import order_is_ready
 from database.schemas import Chips
 from database.schemas import Drink
@@ -122,7 +122,7 @@ def test_calculate_prices_2(order_2):
             ),
         ],
         price=16.2,
-        promotions=['menu'],
+        promotions=['burrimenu'],
     )
     result = calculate_prices(order=order_2)
     assert_dicts(original=result.dict(), expected=expected.dict())
@@ -196,9 +196,9 @@ def test_calculate_prices_promotion_menu(order_promotion_menu):
             ),
         ],
         price=13.5,
-        promotions=['menu'],
+        promotions=['burrimenu'],
     )
-    assert check_promotion_menu_completed(order=order_promotion_menu) is True
+    assert check_promotion_burrimenu(order=order_promotion_menu) is True
     result = calculate_prices(order=order_promotion_menu)
     assert_dicts(original=result.dict(), expected=expected.dict())
 
@@ -242,7 +242,7 @@ def test_calculate_prices_promotion_euromania(order_promotion_menu):
             ),
         ],
         price=12.0,
-        promotions=['menu', 'euromania'],
+        promotions=['burrimenu', 'euromania'],
     )
     assert check_promotion_euromania() is True
     result = calculate_prices(order=order_promotion_menu)

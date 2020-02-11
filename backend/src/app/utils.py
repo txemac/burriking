@@ -27,8 +27,8 @@ def calculate_prices(
     for hamburger in order.hamburgers:
         hamburger.price = calculate_price_hamburger(hamburger=hamburger)
 
-    if check_promotion_menu_completed(order=order):
-        apply_promotion_menu_completed(order=order)
+    if check_promotion_burrimenu(order=order):
+        apply_promotion_burrimenu(order=order)
 
     if check_promotion_euromania():
         apply_promotion_euromania(order=order)
@@ -135,22 +135,24 @@ def calculate_price_meat(
     return result
 
 
-def check_promotion_menu_completed(order):
+def check_promotion_burrimenu(order):
     """
-    Check if the promotion 15% menu completed is applicable.
+    Check if the promotion 15% burrimenu is applicable.
     Menu completed is minimum 1 hamburger, 1 drink and 1 chips.
 
     :param Order order: order
     :return boolean: is promotion applicable
     """
-    return len(order.hamburgers) > 0 and len(order.chips) > 0 and len(order.drinks) > 0
+    return len(order.hamburgers) == 1 and \
+           len(order.chips) == 1 and \
+           len(order.drinks) == 1
 
 
-def apply_promotion_menu_completed(
+def apply_promotion_burrimenu(
         order: Order
 ):
     """
-    Apply the promotion menu completed.
+    Apply the promotion burrimenu.
     15% hamburgers.
 
     :param Order order: order
@@ -158,7 +160,7 @@ def apply_promotion_menu_completed(
     """
     for hamburger in order.hamburgers:
         hamburger.price = hamburger.price * (100 - 15) / 100
-    order.promotions.append('menu')
+    order.promotions.append('burrimenu')
 
 
 def check_promotion_euromania():
