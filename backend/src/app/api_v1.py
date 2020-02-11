@@ -20,9 +20,9 @@ def add_order(
     return mongo_db_client.add_order(order=order)
 
 
-@api_v1.get('/orders/{barista}', response_model=List[Order], status_code=HTTP_200_OK)
+@api_v1.get('/orders/', response_model=List[Order], status_code=HTTP_200_OK)
 def get_orders(
-        barista: str,
+        barista: str = None,
 ):
     orders = list(mongo_db_client.get_orders_by_barista(barista=barista))
     for order in orders:

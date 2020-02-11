@@ -51,6 +51,7 @@ def get_orders_by_barista(
     """
     collection = _get_mongo_db_client()[collection_name]
     filters = dict()
-    filters['barista'] = barista
+    if barista is not None:
+        filters['barista'] = barista
     result = collection.find(filters)
     return result
