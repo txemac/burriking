@@ -30,17 +30,23 @@ class Orders(Order):
 
     @staticmethod
     def get_orders(
-            barista: str = None
+            barista: str = None,
+            start_date: date = None,
+            end_date: date = None,
     ) -> List[Order]:
         """
         Get all orders.
         Filters:
             - barista
+            - date start
+            - date end
 
         :param str barista: barista
+        :param date start_date: date start
+        :param date end_date: date end
         :return List: orders
         """
-        result = mongo_db_client.get_orders_filters(barista=barista)
+        result = mongo_db_client.get_orders_filters(barista=barista, start_date=start_date, end_date=end_date)
 
         orders = list(result)
 
