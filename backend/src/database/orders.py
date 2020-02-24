@@ -58,7 +58,7 @@ class Orders(Order):
     @staticmethod
     def calculate_prices(
             order: Order,
-    ):
+    ) -> Order:
         """
         This method calculates and add the prices of all items and total.
 
@@ -181,7 +181,9 @@ class Orders(Order):
         return result
 
     @staticmethod
-    def check_promotion_burrimenu(order):
+    def check_promotion_burrimenu(
+            order: Order
+    ) -> bool:
         """
         Check if the promotion 15% burrimenu is applicable.
         The same number of hamburgers, drinks and chips.
@@ -207,7 +209,7 @@ class Orders(Order):
         order.promotions.append('burrimenu')
 
     @staticmethod
-    def check_promotion_euromania():
+    def check_promotion_euromania() -> bool:
         """
         Check if the promotion euromania is applicable.
         If today is Wednesday or Sunday.
@@ -232,7 +234,7 @@ class Orders(Order):
     @staticmethod
     def check_promotion_jarramania(
             order: Order
-    ):
+    ) -> bool:
         """
         Check if the promotion jarramania is applicable.
         - 2 burribeers and 1 chips.
