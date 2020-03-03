@@ -19,3 +19,9 @@ app = create_app()
 @app.get('/_health', status_code=200)
 def get_check() -> Dict:
     return dict(status='OK')
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
