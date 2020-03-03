@@ -5,7 +5,7 @@ from fastapi import APIRouter
 from starlette.status import HTTP_200_OK
 from starlette.status import HTTP_201_CREATED
 
-from database.orders import Orders
+from database import orders
 from database.schemas import Order
 
 api_v1 = APIRouter()
@@ -15,7 +15,7 @@ api_v1 = APIRouter()
 def add_order(
         payload: Order
 ):
-    return Orders.create_order(payload=payload)
+    return orders.create_order(payload=payload)
 
 
 @api_v1.get('/orders', response_model=List[Order], status_code=HTTP_200_OK)
@@ -24,4 +24,4 @@ def get_orders(
         start_date: date = None,
         end_date: date = None,
 ):
-    return Orders.get_orders(barista=barista, start_date=start_date, end_date=end_date)
+    return orders.get_orders(barista=barista, start_date=start_date, end_date=end_date)
