@@ -18,6 +18,12 @@ Example:
     "status": {
         "text": "Order created"
     },
+    "meta": {
+        "page": 1,
+        "pages": 9,
+        "results": 211,
+        "showing": 25
+    },
     "data": [{
         "barista": "Txema",
     }]
@@ -62,12 +68,28 @@ def _generate_body(
     :param String message: message
     :return Dict: body
     """
-    return dict(
+    if message is None:
+        message = 'ok'
+
+    body = dict(
         status=dict(
-            text='ok' if message is None else message
+            text=message
         ),
-        data=[data] if type(data) != list else data
+        meta={},
+        data=[]
     )
+
+    # check data
+    if data is not None or data == []:
+        data = [data] if type(data) != list else data
+        body['data'] = data
+        body['meta'] = dict(
+            page=1,
+            pages=1,
+            results=len(data),
+            showing=len(data)
+        )
+    return body
 
 
 generate_get = partial(_generate_response, status_code=HTTPStatus.OK)

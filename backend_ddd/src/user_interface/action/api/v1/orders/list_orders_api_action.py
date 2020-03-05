@@ -18,4 +18,6 @@ class ListOrdersApiAction(ApiAction):
 
         data = [OrderNormalizer.normalize(order=order) for order in query_response.data()]
 
-        return responder.generate_get(data=data)
+        return responder.generate_get(
+            data=data
+        )
