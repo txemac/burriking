@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  api:
+    build: ./src
+    command: python main.py
+    volumes:
+      - ./src/:/usr/src/app/
+    ports:
+      - 5000:5000
+    environment:
+      MONGODB_URL: "mongodb://mongodb:27017"
+      MONGODB_DB_NAME: "burriking"
+      MONGODB_COLLECTION: "orders"
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    restart: always
+    environment:
+      MONGODB_USERNAME: "admin"
+      MONGODB_PASSWORD: "admin"
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo_data:
