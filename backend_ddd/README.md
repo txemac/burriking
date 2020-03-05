@@ -8,12 +8,12 @@ Implement and design a simple REST API
 docker-compose up -d --build
 ```
 
-Check the API with http://127.0.0.1:8000/_health
+Check the API with http://127.0.0.1:5000/_health
 
 
 ## Documentation
 
-http://127.0.0.1:8000/docs or http://127.0.0.1:8000/redoc
+http://127.0.0.1:5000/apidocs
 
 ## Tests
 ```
